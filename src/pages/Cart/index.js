@@ -1,9 +1,12 @@
 import Header from 'components/Header'
 import styles from './Cart.module.scss'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Item from 'components/Item'
+import { resetCart } from 'store/reduces/cart'
 
 export const Cart = () => {
+    const dispatch = useDispatch()
+
     const { cart, total } = useSelector((state) => {
         let total = 0
         const cartReduce = state.cart.reduce((items, itemInCart) => {
@@ -37,6 +40,12 @@ export const Cart = () => {
                 <span>
                     Subtotal: <strong> R$ {total.toFixed(2)} </strong>
                 </span>
+                </div>
+                <div>
+                    <button
+                        className={styles.finalizar}
+                        onClick={() => dispatch(resetCart())}
+                    >Finalizar compra</button>
                 </div>
             </div>
         </div>

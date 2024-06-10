@@ -24,10 +24,11 @@ const cartSlice = createSlice({
                 if(item.id === payload.id) item.qtd += payload.amount
                 return item
             })
-        }
+        },
+        resetCart: () => initialState
     }
 })
 
-export const { updateCart, updateAmount } = cartSlice.actions
+export const { updateCart, updateAmount, resetCart } = cartSlice.actions
 
 export default cartSlice.reducer
