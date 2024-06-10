@@ -6,8 +6,9 @@ import {
 import {
   FaCartPlus
 } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from 'store/reduces/items';
+import { updateCart } from 'store/reduces/cart';
 
 const iconeProps = {
   size: 24,
@@ -25,9 +26,14 @@ export default function Item({
 
 
     const dispatch = useDispatch()
+    const isInTheCart = useSelector((state) => state.cart.some(item => item.id === id))
 
-    const resolveFavorite = (id) => {
+    const resolveFavorite = () => {
       dispatch(toggleFavorite(id))
+    }
+
+    const resolveCart = () => {
+      dispatch(updateCart(id))
     }
 
   return (
@@ -46,13 +52,14 @@ export default function Item({
           </div>
           <div className={styles['item-acoes']}>
             {favorito
-              ? <AiFillHeart {...iconeProps} color='#ff0000' className={styles['item-acao']} onClick={() => resolveFavorite(id)} />
-              : <AiOutlineHeart {...iconeProps} className={styles['item-acao']} onClick={() => resolveFavorite(id)} />
+              ? <AiFillHeart {...iconeProps} color='#ff0000' className={styles['item-acao']} onClick={() => resolveFavorite()} />
+              : <AiOutlineHeart {...iconeProps} className={styles['item-acao']} onClick={() => resolveFavorite()} />
             }
             <FaCartPlus
               {...iconeProps}
-              color={false ? '#1875E8' : iconeProps.color}
+              color={isInTheCart ? '#1875E8' : iconeProps.color}
               className={styles['item-acao']}
+              onClick={() => resolveCart()}
             />
           </div>
         </div>
