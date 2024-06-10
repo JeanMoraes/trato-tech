@@ -4,16 +4,22 @@ import { useSelector } from 'react-redux'
 import Item from 'components/Item'
 
 export const Cart = () => {
-    const cart = useSelector((state) => {
+    const { cart, total } = useSelector((state) => {
+        let total = 0
         const cartReduce = state.cart.reduce((items, itemInCart) => {
             const item = state.items.find(item => item.id === itemInCart.id)
+            total += (item.preco * itemInCart.qtd)
             items.push({
                 ...item,
                 qtd: itemInCart.qtd
             })
             return items
         }, [])
-        return cartReduce
+
+        return {
+            cart: cartReduce,
+            total
+        }
     })
     return (
         <div>
@@ -29,7 +35,7 @@ export const Cart = () => {
                     Resumo da compra
                 </strong>
                 <span>
-                    Subtotal: <strong> R$ {0.0.toFixed(2)} </strong>
+                    Subtotal: <strong> R$ {total.toFixed(2)} </strong>
                 </span>
                 </div>
             </div>
