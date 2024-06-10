@@ -231,6 +231,17 @@ const initialState = [{
 const itemsSlice = createSlice({
   name: 'items',
   initialState,
+  reducers: {
+    toggleFavorite: (state, { payload }) => {
+      state = state.map((item) => {
+        if(item.id === payload) {
+          item.favorito = !item.favorito
+        }
+        return item
+      })
+    }
+  }
 });
 
+export const { toggleFavorite } = itemsSlice.actions
 export default itemsSlice.reducer;
