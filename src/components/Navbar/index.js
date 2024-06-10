@@ -6,6 +6,7 @@ import {
     RiShoppingCart2Line,
     RiShoppingCart2Fill
 } from 'react-icons/ri'
+import { Link } from 'react-router-dom';
 
 const iconsProps = {
     color: 'white',
@@ -20,14 +21,14 @@ export const Navbar = () => {
 
             <div className={styles.links}>
                 <div>
-                    <a
-                        href='/' 
+                    <Link
+                        to='/' 
                         className={classNames(styles.link, {
                             [styles.selected]: window.location.pathname === '/'
                         })}
                     >
                         Página Inicial
-                    </a>
+                    </Link>
                 </div>
             </div>
             
@@ -36,12 +37,12 @@ export const Navbar = () => {
             </div>
 
             <div className={styles.icones}>
-                <a href='/carrinho'>
+                <Link to='/carrinho'>
                         { window.location.pathname === '/carrinho' ? 
                             <RiShoppingCart2Fill {...iconsProps} /> :
                             <RiShoppingCart2Line {...iconsProps} />
                         }
-                </a>
+                </Link>
             </div>
         </nav>
     )
