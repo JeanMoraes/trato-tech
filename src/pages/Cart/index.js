@@ -8,14 +8,18 @@ export const Cart = () => {
     const dispatch = useDispatch()
 
     const { cart, total } = useSelector((state) => {
+        const regexp = new RegExp(state.search, 'i')
+
         let total = 0
         const cartReduce = state.cart.reduce((items, itemInCart) => {
             const item = state.items.find(item => item.id === itemInCart.id)
             total += (item.preco * itemInCart.qtd)
-            items.push({
-                ...item,
-                qtd: itemInCart.qtd
-            })
+            if(item.titulo.match(regexp)) {
+                items.push({
+                    ...item,
+                    qtd: itemInCart.qtd
+                })
+            }
             return items
         }, [])
 

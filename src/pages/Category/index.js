@@ -7,10 +7,14 @@ import Item from "components/Item"
 
 export const Category = () => {
     const { slug } = useParams()
-    const { category, items } = useSelector((state) => ({
-        category: state.categories.find(category => category.id === slug),
-        items: state.items.filter(item => item.categoria === slug)
-    }))
+    const { category, items } = useSelector((state) => {
+        const regexp = new RegExp(state.search, 'i')
+
+        return {
+            category: state.categories.find(category => category.id === slug),
+            items: state.items.filter(item => item.categoria === slug && item.titulo.match(regexp))
+        }
+    })
 
     return (
         <div>
