@@ -7,12 +7,16 @@ export default function Header({ title, description, className = '', img}) {
         <h1>{title}</h1>
         <h2>{description}</h2>
       </div>
-      <div className={styles['header-imagem']}>
-        <img
-          alt={title}
-          src={img}
-        />
-      </div>
+      {
+        img && (
+          <div className={styles['header-imagem']}>
+            <img
+              alt={title}
+              src={img}
+            />
+          </div>
+        )
+      }
     </header>
   )
 }

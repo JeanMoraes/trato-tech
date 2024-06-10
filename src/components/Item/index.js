@@ -9,6 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from 'store/reduces/items';
 import { updateCart } from 'store/reduces/cart';
+import classNames from 'classnames';
 
 const iconeProps = {
   size: 24,
@@ -22,6 +23,7 @@ export default function Item({
     preco,
     descricao,
     favorito,
+    cart
   }) {
 
 
@@ -37,7 +39,9 @@ export default function Item({
     }
 
   return (
-    <div className={styles.item}>
+    <div className={classNames(styles.item, {
+      [styles.itemNoCarrinho]: cart 
+    })}>
       <div className={styles['item-imagem']}>
         <img src={foto} alt={titulo} />
       </div>
