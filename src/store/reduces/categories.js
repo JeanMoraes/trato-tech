@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit'
+
 import automotivoThumb from 'assets/categories/thumbnail/automotivo.png';
 import eletronicosThumb from 'assets/categories/thumbnail/eletronicos.png';
 import escritorioThumb from 'assets/categories/thumbnail/escritorio.png';
@@ -9,7 +11,8 @@ import escritorioHeader from 'assets/categories/header/escritorio.png';
 import jogosHeader from 'assets/categories/header/jogos.png';
 import somHeader from 'assets/categories/header/som.png';
 
-export const categories = [{
+
+const initialState = [{
     nome: 'Eletrônicos',
     thumbnail: eletronicosThumb,
     header: eletronicosHeader,
@@ -40,3 +43,10 @@ export const categories = [{
     id: 'som',
     descricao: 'Curta suas músicas e seus filmes com a melhor qualidade!'
   }]
+
+  const categoriesSlice = createSlice({
+     name: 'categories',
+     initialState
+  })
+
+  export default categoriesSlice.reducer
