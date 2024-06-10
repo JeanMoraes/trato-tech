@@ -2,9 +2,16 @@ import Header from "components/Header"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 
+import styles from './Category.module.scss'
+import Item from "components/Item"
+
 export const Category = () => {
     const { slug } = useParams()
-    const category = useSelector((state) => state.categories.find(category => category.id === slug))
+    const { category, items } = useSelector((state) => ({
+        category: state.categories.find(category => category.id === slug),
+        items: state.items.filter(item => item.categoria === slug)
+    }))
+
     return (
         <div>
             <Header
@@ -13,6 +20,11 @@ export const Category = () => {
                 img={category.header}
             />
 
+            <div className={styles.itens}>
+                {items?.map(item => (
+                    <Item key={item.id} {...item} />
+                ))}
+            </div>
         </div>
     )
 }
