@@ -2,19 +2,26 @@ import styles from './Item.module.scss';
 import {
   AiOutlineHeart,
   AiFillHeart,
+  AiFillMinusCircle,
+  AiFillPlusCircle
 } from 'react-icons/ai';
 import {
   FaCartPlus
 } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from 'store/reduces/items';
-import { updateCart } from 'store/reduces/cart';
+import { updateCart, updateAmount } from 'store/reduces/cart';
 import classNames from 'classnames';
 
 const iconeProps = {
   size: 24,
   color: '#041833',
 };
+
+const qtdIconsProps = {
+  size: 32,
+  color: '#1875e8',
+}
 
 export default function Item({
     id,
@@ -23,7 +30,8 @@ export default function Item({
     preco,
     descricao,
     favorito,
-    cart
+    cart,
+    qtd
   }) {
 
 
@@ -37,6 +45,7 @@ export default function Item({
     const resolveCart = () => {
       dispatch(updateCart(id))
     }
+
 
   return (
     <div className={classNames(styles.item, {
@@ -59,12 +68,31 @@ export default function Item({
               ? <AiFillHeart {...iconeProps} color='#ff0000' className={styles['item-acao']} onClick={() => resolveFavorite()} />
               : <AiOutlineHeart {...iconeProps} className={styles['item-acao']} onClick={() => resolveFavorite()} />
             }
-            <FaCartPlus
-              {...iconeProps}
-              color={isInTheCart ? '#1875E8' : iconeProps.color}
-              className={styles['item-acao']}
-              onClick={() => resolveCart()}
-            />
+            {
+              cart ? (
+                <div className={styles.quantidade}>
+                  Quantidade: 
+                  <AiFillMinusCircle
+                    {...qtdIconsProps}
+                    onClick={ () => {
+                      if(qtd > 1) dispatch(updateAmount({id, amount: -1}))
+                      else resolveCart()
+                    }}
+                  />
+                  <span>{ String(qtd || 0).padStart(2, '0') }</span>
+                  <AiFillPlusCircle
+                    {...qtdIconsProps}
+                    onClick={ () => dispatch(updateAmount({id, amount: 1})) }
+                  />
+                </div>
+              ) : ( <FaCartPlus
+                  {...iconeProps}
+                  color={isInTheCart ? '#1875E8' : iconeProps.color}
+                  className={styles['item-acao']}
+                  onClick={() => resolveCart()}
+                /> )
+            }
+            
           </div>
         </div>
       </div>

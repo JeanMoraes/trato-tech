@@ -18,10 +18,16 @@ const cartSlice = createSlice({
                 ];
             }
             return state.filter(item => item.id !== payload)
+        },
+        updateAmount: (state, { payload }) => {
+            state = state.map(item => {
+                if(item.id === payload.id) item.qtd += payload.amount
+                return item
+            })
         }
     }
 })
 
-export const { updateCart } = cartSlice.actions
+export const { updateCart, updateAmount } = cartSlice.actions
 
 export default cartSlice.reducer
